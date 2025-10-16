@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": "3ZjXvrVBp2Z86Xy0XPTJF",
+      "username": "admin",
+      "email": "admin@admin.com",
+      "password": "12345",
+      "isAdmin": true
+    }
+  ],
+  "products": [
+    {
+      "id": "1",
+      "title": "Backpack",
+      "price": 109.95,
+      "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+      "category": "men",
+      "image": "http://fakestoreapi.com/img/81fPK-2AYL.AC_SL1500_.jpg"
+    }
+  ]
+}
