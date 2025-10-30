@@ -2,8 +2,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { asyncupdateuser } from "../store/Actions/UserActions"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import axios from "../api/AxiosConfig"
+import {Bounce, toast} from "react-toastify"
 
 const Product = () => {
     const dispatch = useDispatch()
@@ -32,6 +33,16 @@ const Product = () => {
         const x = copyuser.cart.findIndex((c) => c?.product?.id == product.id)
         if (x == -1) {
             copyuser.cart.push({ product, quantity: 1 })
+            toast.success("Added to cart.",{
+            position:"bottom-right",
+            autoClose:1000,
+            hideProgressBar:true,
+            pauseOnHover:true,
+            transition:Bounce,
+            theme:"dark",
+            draggable:false,
+            closeOnClick:true
+        })
         } else {
             copyuser.cart[x] = { product, quantity: copyuser.cart[x].quantity + 1 }
         }
@@ -48,9 +59,8 @@ const Product = () => {
             <button onClick={() => addToCartHandler(product)} >Add to cart</button>
         </div>
     })
-    console.log(products)
-    return products.length > 0 ?
-        (<InfiniteScroll
+
+    return <InfiniteScroll
             dataLength={products.length}
             next={fetchProducts}
             hasMore={hasMore}
@@ -59,8 +69,8 @@ const Product = () => {
                 <p style={{ textAlign: 'center' }}>
                     <b>Yay! You have seen it all</b>
                 </p>}>
-            <div className="product-showcase">{renderProducts}</div></InfiniteScroll>)
-        : <p>Loading products...</p>
+            <div className="product-showcase">
+                <Suspense fallback={<h1 style={{"color":"yellow"}}>Loading....</h1>}> {renderProducts} </Suspense></div></InfiniteScroll>
 }
 
 export default Product

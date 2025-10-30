@@ -1,5 +1,6 @@
 import {Routes,Route} from 'react-router-dom';
 import { lazy } from 'react';
+import UnauthWraper from './UnauthWraper';
 const PageNotFound=lazy(()=>import( '../pages/PageNotFound'))
 const Home=lazy(()=>import("../pages/Home"))
 const Product=lazy(()=>import("../pages/Product"))
@@ -17,8 +18,8 @@ const MainRoutes = () => {
             <Route path='/' element={<Home/>} />
             <Route path='/products' element={<Product/>} />
             <Route path='/settings' element={<Settings/>} />
-            <Route path='/login' element={<Login/>} />
-            <Route path='/register' element={<Register/>} />
+            <Route path='/login' element={<UnauthWraper><Login/></UnauthWraper>} />
+            <Route path='/register' element={<UnauthWraper><Register/></UnauthWraper>} />
             <Route path='/cart' element={<Cart/>} />
             <Route path='/admin/create-product' element={<AuthWrappers><CreateProduct/></AuthWrappers>} />
             <Route path='/product/:id' element={<ProductDetails/>} />

@@ -2,6 +2,10 @@ import HomePageDesgin from "../components/HomePageDesgin"
 import { useNavigate } from "react-router-dom"
 import Trendings from "../components/Trendings"
 import { useSelector } from "react-redux";
+import ContactBlock from "../components/ContactBlock";
+import { useEffect } from "react";
+import { gsap } from "gsap";
+
 const Home = () => {
     const user=useSelector(state=>state.user.user)
     const navigate = useNavigate();
@@ -19,6 +23,7 @@ const Home = () => {
             </div>
             <HomePageDesgin/>
             <Trendings/>
+            <ContactBlock/>
         </div>
         </>
     )

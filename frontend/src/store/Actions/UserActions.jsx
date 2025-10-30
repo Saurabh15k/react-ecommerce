@@ -4,6 +4,7 @@ import { loaduser, removeuser } from "../reducers/UserSlice";
 export const asyncregisteruser=(user)=>async(dispatch,getState)=>{
     try{
         await axios.post('/users',user)
+        dispatch(asynccurrentuser())
     }catch(err){
         console.log(err)
     }
@@ -13,6 +14,7 @@ export const asyncloginuser=(user)=>async(dispatch,getState)=>{
     try {
         const {data}=await axios.get(`/users?email=${user.email}&password=${user.password}`)
         localStorage.setItem("user",JSON.stringify(data[0]))
+        dispatch(asynccurrentuser())
     } catch (error) {
         console.log(error)
     }
@@ -42,6 +44,7 @@ export const asyncupdateuser=(id,user)=>async(dispatch,getState)=>{
     try {
         const {data}=await axios.put("/users/"+id,user)
         localStorage.setItem("user",JSON.stringify(data))
+        dispatch(loaduser())
     } catch (error) {
         console.log(error)
     }

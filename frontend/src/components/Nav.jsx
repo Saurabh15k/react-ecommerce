@@ -11,7 +11,7 @@ const Nav = () => {
             {user && user?.isAdmin ? (<> 
             <NavLink to="/admin/create-product" style={{textDecoration:"none",color:"black",fontWeight:"500"}}>CREATE PRODUCT</NavLink>
             </>):(<>
-            <NavLink to="/register" style={{textDecoration:"none",color:"black",fontWeight:"500"}}>Sign up</NavLink>
+            <NavLink to="/register" style={{textDecoration:"none",color:"black",fontWeight:"500",display:!user?"block":"none"}}>Sign up</NavLink>
             </>)}
         </nav>
     )

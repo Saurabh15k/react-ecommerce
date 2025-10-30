@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import {useForm} from "react-hook-form"
 import { asyncdeleteproduct, asyncupdateproduct } from "../../store/Actions/ProductActions"
+import {Bounce, toast} from "react-toastify"
+import { asyncupdateuser } from "../../store/Actions/UserActions"
 
 const ProductDetails = () => {
     const {id}=useParams()
@@ -24,6 +26,27 @@ const ProductDetails = () => {
         dispatch(asyncdeleteproduct(id))
         navigate("/products")
     }
+    const addToCartHandler = (product) => {
+            const copyuser = { ...user, cart: [...user.cart] }
+            const x = copyuser.cart.findIndex((c) => c?.product?.id == product.id)
+            if (x == -1) {
+                copyuser.cart.push({ product, quantity: 1 })
+                toast.success("Added to cart.",{
+                position:"bottom-right",
+                autoClose:1000,
+                hideProgressBar:true,
+                pauseOnHover:true,
+                transition:Bounce,
+                theme:"dark",
+                draggable:false,
+                closeOnClick:true
+            })
+            } else {
+                copyuser.cart[x] = { product, quantity: copyuser.cart[x].quantity + 1 }
+            }
+            dispatch(asyncupdateuser(copyuser.id, copyuser))
+            navigate("/cart")
+        }
     return product ? (
         <>
             <div className="update-product">
@@ -33,7 +56,7 @@ const ProductDetails = () => {
                 <h2>{product?.title}</h2>
                 <h3>${product?.price}</h3>
                 <p>{product?.description}</p>
-                <button type="button">Add to cart</button>
+                <button type="button" onClick={()=>addToCartHandler(product)}>Add to cart</button>
                 </div>
             </div><hr /><hr />
             {user && user?.isAdmin && <form onSubmit={handleSubmit(updateProductHandler)} className="product-form">
